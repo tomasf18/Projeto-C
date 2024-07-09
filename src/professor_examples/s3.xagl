@@ -1,0 +1,58 @@
+# Code produced by ChatGPT
+
+# Nested Cycles
+
+for i in 1 .. 3 do {
+    for j in 1 .. 4 do {
+        m.mouth = Close;
+        refresh v after 10 ms;
+        m.mouth = Open;
+        refresh v after 20 ms;
+        move m by (5,0);       # move right by 5 units
+        move v by (5,0);       # move right by 5 units
+        refresh v;
+    }
+    move m by (0,10);         # move down by 10 units after inner loop
+    move v by (0,10);         # move down by 10 units after inner loop
+}
+
+# If statement
+
+for i in 1 .. 6 do {
+    m.mouth = Open;
+    refresh v after 15 ms;
+    if i % 2 == 0 do {
+        move m by (10,5);       # move diagonally
+        move v by (10,5);       # move diagonally
+    } else {
+        move m by (-10,5);      # move diagonally in opposite direction
+        move v by (-10,5);      # move diagonally in opposite direction
+    }
+    refresh v;
+}
+
+# While loop
+
+while m.x < 200 do {
+    if m.state == Open do {
+        m.mouth = Open;
+        m.state = Close;      # Switch state
+    } else {
+        m.mouth = Close;
+        m.state = Open;       # Switch state
+    }
+
+    # Using if-statement with parentheses
+    if (m.mouth == Open) do {
+        refresh v after 20 ms;
+    } else {
+        refresh v after 30 ms;
+    }
+
+    # Move the pacman and the view to the right by 10 units
+    move m by (10,0);
+    move v by (10,0);
+
+    # Refresh the view again to capture the movement
+    refresh v;
+}

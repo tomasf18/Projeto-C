@@ -1,0 +1,29 @@
+m.prev = 0;
+m.current = 1;
+m.next = 1;
+
+for i in 1..4 do {
+    m.prev = m.current; 
+    m.current = m.next;
+    m.next = m.current + m.prev;
+    move m by (-m.current, -m.current);
+    refresh v after 100ms;
+
+    m.next = m.current + m.prev;
+    m.prev = m.current; 
+    m.current = m.next;
+    move m by (-m.current, m.current);
+    refresh v after 100ms;
+
+    m.next = m.current + m.prev;
+    m.prev = m.current; 
+    m.current = m.next;
+    move m by (m.current, m.current);
+    refresh v after 100ms;
+
+    m.next = m.current + m.prev;
+    m.prev = m.current; 
+    m.current = m.next;
+    move m by (m.current, -m.current);
+    refresh v after 100ms;
+}

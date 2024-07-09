@@ -1,0 +1,36 @@
+m.g = 9.8;
+m.dt = 0.01;
+
+m.t0 = 0;
+m.t = m.t0;
+m.tf = 30;
+
+m.v = 0;
+m.h = 0;
+m.f = 400-(30*2);
+
+m.r = 30; # hardcoded
+
+refresh v after 2 s;
+
+t.text = "Current position";
+while (m.t < m.tf) do {
+    tn.text = m.h;
+    
+    m.temp = m.g * m.dt;
+    m.v = m.v + m.temp;
+    m.temp = m.v * m.dt;
+    m.h = m.h + m.temp;
+
+    move m to ( 500, m.h );
+
+    if ( m.f < m.h ) do {
+        m.v = - m.v;
+        m.v =  0.6 * m.v;
+        m.h = m.f;
+    }
+
+    m.t = m.t + m.dt;
+
+    refresh v;
+}

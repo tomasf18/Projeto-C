@@ -1,0 +1,118 @@
+view : View with {
+    width = 1000;
+    height = 800;
+    title = "Fibonacci spiral";
+    background = "White";
+}
+
+r1 : Rectangle at (270, 250) with {
+    length = (10,10);
+    fill = "Red";
+}
+
+r2 : Rectangle at (250, 250) with {
+    length = (10,10);
+    fill = "Red";
+}
+
+
+r3 : Rectangle at (260, 280) with {
+    length = (20,20);
+    fill = "Red";
+}
+
+r4 : Rectangle at (310, 270) with {
+    length = (30,30);
+    fill = "Red";
+}
+r5 : Rectangle at (290, 190) with {
+    length = (50,50);
+    fill = "Red";
+}
+
+r6 : Rectangle at (160, 220) with {
+    length = (80,80);
+    fill = "Red";
+}
+
+r7 : Rectangle at (210, 430) with {
+    length = (130,130);
+    fill = "Red";
+}
+
+r8 : Rectangle at (550, 350) with {
+    length = (210,210);
+    fill = "Red";
+}
+
+
+a1 : Arc at (270-10, 250+10) with {
+    length = (10*2, 10*2);
+    start = 0;
+    extent = 90;
+}
+a2 : Arc at (250+10, 250+10) with {
+    length = (10*2,10*2);
+    start = 90;
+    extent = 90;
+}
+a3 : Arc at (260+20, 280-20) with {
+    length = (20*2, 20*2);
+    start = 180;
+    extent = 90;
+}
+a4 : Arc at (310-30, 270-30) with {
+    length = (30*2,30*2);
+    start = 270;
+    extent = 90;
+}
+a5 : Arc at (290-50, 190+50) with {
+    length = (50*2, 50*2);
+    start = 0;
+    extent = 90;
+}
+a6 : Arc at (160+80, 220+80) with {
+    length = (80*2, 80*2);
+    start = 90;
+    extent = 90;
+}
+a7 : Arc at (210+130, 430-130) with {
+    length = (130*2, 130*2);
+    start = 180;
+    extent = 90;
+}
+a8 : Arc at (550-210, 350-210) with {
+    length = (210*2, 210*2);
+    start = 270;
+    extent = 90;
+}
+
+
+rects : Array = [r1, r2, r3, r4, r5, r6, r7, r8];
+arcs : Array =  [a1, a2, a3, a4, a5, a6, a7, a8];
+
+s1 : Script = load "./tests/xaglScripts/s4.xagl";
+
+for i in 0..8 do {
+    rect : Rectangle = rects[i];
+    arc : Arc = arcs[i];
+
+    play s1 with {
+        m = rect;
+        v = view;
+    }
+    play s1 with {
+        m = arc;
+        v = view;
+    }
+
+    refresh view after 200ms;
+}
+
+refresh view;
+
+print "Click on the canvas to exit.";
+p : Point = wait mouse click;
+
+# Close the view when the loop exits
+close view;

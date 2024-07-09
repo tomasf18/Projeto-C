@@ -1,0 +1,31 @@
+#
+# create an instance of a View, at the beginning of the strip
+#
+view : View with {
+    Ox = -450;
+    Oy = 0;
+    width = 401;
+    height = 401;
+    title = "Illustrating a moving pacman";
+    background = "alice blue";
+}
+
+rectangle : Rectangle at (0,0) with {
+    length = (1000,70);
+    fill = "blue";
+}
+
+s2 : Script = load "./tests/xaglScripts/s2.xagl";
+play s2 with {
+    m = rectangle;
+    v = view;
+}
+
+
+sUser : Script = input "Insert a XAgl script to make pacman move 100 units to the right ";
+play sUser with {
+    m = rectangle;
+    v = view;
+}
+
+close view;

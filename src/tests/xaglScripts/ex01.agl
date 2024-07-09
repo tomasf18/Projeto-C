@@ -1,0 +1,27 @@
+#
+# create an instance of a View, at the beginning of the strip
+#
+view : View with {
+    Ox = -450;
+    Oy = 0;
+    width = 401;
+    height = 401;
+    title = "Illustrating";
+    background = "alice blue";
+}
+
+rectangle : Rectangle at (10,200) with {
+    length = (100,70);
+    fill = "blue";
+}
+
+s1 : Script = load "./tests/xaglScripts/s1.xagl";
+play s1 with {
+    m = rectangle;
+    v = view;
+}
+
+print "Press any mouse button to quit";
+pos : Point = wait mouse click;
+
+close view;

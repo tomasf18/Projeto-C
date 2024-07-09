@@ -1,0 +1,114 @@
+
+# ERROR: Closing view before instatianting one
+close view;
+
+view : View with {
+    width = 601;
+    height = 601;
+    title = "Illustrating the minimum level graphical models";
+    background = "alice blue";
+}
+
+# All minimum valid types
+# If an invalid model is passed, semantic wont
+# Let it pass, example shown later 
+Dot at (0, 0) with {} 
+Line at (0, 0) with {} 
+Rectangle at (0, 0) with {} 
+Ellipse at (0, 0) with {} 
+Text at (0, 0) with {} 
+Arc at (0, 0) with {} 
+ArcChord at (0, 0) with {} 
+ArcChord at (0, 0) with {} 
+PieSlice at (0, 0) with {} 
+
+# ERROR: cannot assign number to String
+cellSize : String = 200;
+cellSize : Number = 200;
+
+Line at (-cellSize,cellSize) with {
+    length = (50,50);
+    # Error fill must be an string
+    fill = 10; 
+}
+
+# ERROR: Variable not instantiated
+Rectangle at p with {
+    length = (50,50);
+    fill = "orange";
+}
+
+# ERROR: Variable is not a point
+Rectangle at cellSize with {
+    length = (50,50);
+    fill = "orange";
+}
+
+p : Point; 
+
+# ERROR: point does not have a value assigned
+Ellipse at p with {
+    length = (60,40);
+    fill = "blue";
+}
+
+p = (cellSize, cellSize);
+Arc at p with {
+    length = (50,50);
+    start = 30;
+    extent = 100;
+    outline = "tomato";
+}
+
+#  ERROR: Invalid point
+ArcChord at ("hello",0) with {
+    length = (50,50);
+    start = 30;
+    extent = 150;
+    fill = "cyan";
+}
+
+# ERROR: Not a valid model (and not defined by user yet)
+InvalidModel at (-cellSize,-cellSize) with {
+    length = (50,50);
+    start = 30;
+    extent = 300;
+    fill = "blue";
+}
+
+
+refresh view;
+
+
+# ERROR: Cannot compare two values of different types
+boolExpr : Boolean = False == ("fish" == 3);
+boolExpr : Boolean = "fish" == "fish";
+
+
+pacman : PieSlice at (0,0) with {
+    length = (50,50);
+    fill = "pink";
+    start = 30;
+    extent = 300;
+}
+
+
+for i in 1..10 do {
+    with nonExistingVariable do {
+        start = 1;
+        extent = 359;
+    }
+    refresh view after 20 ms;
+    with pacman do {
+        start = 30;
+        extent = 300;
+    }
+
+    refresh view after 25 ms;
+    move pacman by (10,0);
+    refresh view;
+}
+
+print "Press any mouse button to quit";
+pos : Point = wait mouse click;
+close view;

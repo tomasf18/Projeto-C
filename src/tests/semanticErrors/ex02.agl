@@ -1,0 +1,127 @@
+view : View with {
+    Ox = -450;
+    Oy = 0;
+    width = 401;
+    height = 401;
+    title = "Illustrating a moving pacman";
+    background = "alice blue";
+}
+
+Pacman :: Model {
+    face : PieSlice at (0,0) with {
+        length = (50,50);
+        fill = "pink";
+        start = 30;
+        extent = 300;
+    }
+    Ellipse at (20,35) with {
+        fill = "black";
+        length = (5,5);
+    }
+}
+
+# ERROR: Invalid type to be assigned to an object
+x : InvalidModel at (0, 0);
+x : InvalidModel;
+
+pacman : Pacman at (0, 0);
+
+for i in 1 .. 10 do {
+    # ERROR: Invalid model subModel
+    with pacman.invalidAttr do {
+        start = 1;
+        extent = 359;
+    }
+    refresh view after 20 ms;
+    with pacman.face do {
+        start = 30;
+        extent = 300;
+    }
+
+
+    refresh view after 25 ms;
+
+    move pacman by (10,0);
+
+    # ERROR: vector cannot be a point!
+    p : Point = (10 : 30);
+
+    # ERROR: cannot apply move method to primitive types
+    move p by (10,0);
+    refresh view;
+}
+
+# ERROR: Enum must be defined inside a Model
+mouth : Enum in { Open, Closed}
+
+Snake :: Model {
+    body : Blob at (200, 200) with {
+        points = [(-60, -20), (-60, -40), (20, -40), (20, 20), (60, 20), (60, 40), (20, 40), (-20,-20)];
+        fill = "red";
+    }
+    eye1 : Ellipse at (50, 33) with {
+        fill = "black";
+        length = (5,5);
+    }
+    eye2 : Ellipse at (50, 26) with {
+        fill = "black";
+        length = (5,5);
+    }
+
+    bodyPaint : Enum in {red, green}
+    # ERROR: invalid enum
+    action on face {
+        if face == red do {
+            with body do {
+                x=1;
+            }
+        }
+    }
+
+    action on bodyPaint {
+        # ERROR: invalid Enum name
+        if notAnEnum == red do {
+            with body do{
+                x=1;
+            }
+            # ERROR: not a valid state
+        }
+    }
+    action on bodyPaint {
+        # ERROR : Enum does not contain value
+        if bodyPaint == Red do {
+            with body do {
+                x=1;
+            }
+        }
+    }
+
+    action on bodyPaint {
+        # ERROR : Enum does not contain value
+        if bodyPaint == red do {
+            # ERROR : Not a valid subModel
+            with notAvalidObject do {
+                x=1;
+            }
+        }
+    }
+}
+
+snake : snek;
+
+snake : Snake at (0, 0);
+
+for i in 1 .. 10 do {
+    # ERROR: Not a valid enum
+    snake.mouth = Open;
+    refresh view after 25 ms;
+
+    # ERROR: Not a valid enum value
+    snake.bodyPaint = Closed;
+    refresh view after 20 ms;
+
+    snake.bodyPaint = red;
+    refresh view after 20 ms;
+
+    refresh view;
+}

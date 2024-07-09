@@ -1,0 +1,27 @@
+# create an instance of a View.
+view : View with {
+    width = 500;
+    height = 500;
+    title = "Moving Ellipse";
+    background = "white";
+}
+
+# create an instance of an ellipse
+ellipse : Ellipse at (50, 50) with {
+    length = (100, 50);
+    fill = "blue";
+}
+
+# refresh the view to show the initial ellipse
+refresh view;
+
+# animation to move the ellipse to the right
+for i in 1..20 do {
+    move ellipse by (10, 0);
+    refresh view after 200 ms;
+}
+
+print "Press any mouse button to quit";
+pos : Point = wait mouse click;
+
+close view;

@@ -1,0 +1,47 @@
+# Create an instance of a View
+view : View with {
+    width = 1000;
+    height = 1000;
+    title = "Complex Shapes Movement";
+    background = "lightblue";
+}
+
+# Refresh the view to display the empty canvas
+refresh view;
+
+polyline : Polyline at (100, 100) with {
+    points = [
+        (100, 50), 
+        (300, 50), 
+        (300, 250), 
+        (200, 350), 
+        (100, 250), 
+        (100, 50)
+    ];
+    fill = "red";
+}
+
+spline : Spline at (200, 200) with {
+    points = [
+        (100, 50), 
+        (300, 50), 
+        (300, 250), 
+        (200, 350), 
+        (100, 250), 
+        (100, 50)
+    ];
+    fill = "blue";
+}
+
+objects : Array = [view, polyline, spline];
+
+for i in 1..85 do {
+    move objects by (10, 0);
+    refresh view after 100 ms;  # update view every 100 milliseconds
+}
+
+print "Click on the canvas to exit.";
+p : Point = wait mouse click;
+
+# Close the view when the loop exits
+close view;

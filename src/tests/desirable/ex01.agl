@@ -1,0 +1,133 @@
+# Create an instance of a View
+view : View with {
+    width = 1000;
+    height = 1000;
+    title = "Complex Shapes Movement";
+    background = "lightblue";
+}
+
+# Refresh the view to display the empty canvas
+refresh view;
+
+polyline : Polyline at (100, 100) with {
+    points = [
+        (100, 50), 
+        (300, 50), 
+        (300, 250), 
+        (200, 350), 
+        (100, 250), 
+        (100, 50)
+    ];
+    fill = "red";
+}
+
+spline : Spline at (200, 200) with {
+    points = [
+        (100, 50), 
+        (300, 50), 
+        (300, 250), 
+        (200, 350), 
+        (100, 250), 
+        (100, 50)
+    ];
+    fill = "blue";
+}
+
+blob : Blob at (300, 300) with {
+    points = [
+        (100, 50), 
+        (300, 50), 
+        (300, 250), 
+        (200, 350), 
+        (100, 250), 
+        (100, 50)
+    ];
+    fill = "green";
+}
+
+polygon : Polygon at (400, 400) with {
+    points = [
+        (100, 50), 
+        (300, 50), 
+        (300, 250), 
+        (200, 350), 
+        (100, 250), 
+        (100, 50)
+    ];
+    fill = "purple";
+}
+
+# Refresh the view to display all shapes
+refresh view;
+
+expression : Boolean = 3 == 3;
+
+# Define the shapes to be moved
+shapes : Array = [polyline, spline, blob, polygon];
+
+if !(((1+10) > (1-3) == False) && expression) do { 
+    for i in 1..85 do {
+        move polyline by (10, 0);
+        move spline by (0, 10);
+        move blob by (-10, 0);
+        move polygon by (0, -10);
+        refresh view after 100 ms;  # update view every 100 milliseconds
+    }
+} else if 3>2 do {
+    for i in 1..85 do {
+        move polyline by (-10, 0);
+        move spline by (0, -10);
+        move blob by (10, 0);
+        move polygon by (0, 10);
+        refresh view after 100 ms;  # update view every 100 milliseconds
+    }
+} else do {
+    print "Não vai entrar aqui!";
+}
+
+n : Integer = 0;
+
+while n<2 do {
+    if !expression do {
+        for i in 1..85 do {
+            move polyline by (10, 0);
+            move spline by (0, 10);
+            move blob by (-10, 0);
+            move polygon by (0, -10);
+            refresh view after 100 ms;  # update view every 100 milliseconds
+        }
+    } else do {
+        for i in 1..85 do {
+            move polyline by (-10, 0);
+            move spline by (0, -10);
+            move blob by (10, 0);
+            move polygon by (0, 10);
+            refresh view after 100 ms;  # update view every 100 milliseconds
+        }
+    }
+
+    n = n + 1;
+}
+
+v : Vector = (50 : 10);
+
+print v;
+
+a : Array = [1, 2, 3, 4, 5, 6, 7, 8];
+
+print "";
+print "Substituing 7:";
+print"";
+a[6] = 1000;
+
+print "";
+print a; 
+print " -> a[6] == "; 
+print a[6];
+print ""; 
+
+print "Click on the canvas to exit.";
+p : Point = wait mouse click;
+
+# Close the view when the loop exits
+close view;

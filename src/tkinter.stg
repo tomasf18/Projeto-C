@@ -1,0 +1,213 @@
+module(name, classesFile, stat) ::= <<
+from tkinter import *
+from <classesFile> import *
+import time
+import math
+from Interpreter import Interpreter
+
+root = Root()
+
+<stats(stat)>
+
+root.tk.mainloop()
+>>
+
+
+view(attributeValue, viewName) ::= <<
+viewOpts = {
+    <ViewOptions(attributeValue)>
+}
+
+<viewName> = View(root, viewOpts)
+>>
+
+
+ViewOptions(option) ::= <<
+<if(option)><option; separator=",\n"><endif>
+>>
+
+
+option(attribute, value) ::= <<
+"<attribute>" : <value>
+>>
+
+
+assignment(stat, var, value) ::= <<
+<stats(stat)>
+<var> = <value>
+>>
+
+
+stats(stat) ::= <<
+<if(stat)><stat ; separator="\n"><endif>
+>>
+
+
+create_object(stat, objectVar, figure, referencePoint, propsVals, view) ::= <<
+
+# Start <figure> ---
+<stats(stat)>
+<objectVar> = <figure>(root=root, at=<referencePoint>, <propsVals>)
+# --- End <figure>
+
+>>
+
+
+propsVals(prop, value) ::= <<
+<if(prop && value)>
+<prop>=<value ; separator=", ">
+<endif>
+>>
+
+
+if_stat(expr, statIf) ::= <<
+if (<expr>):
+    <stats(statIf)>
+>>
+
+if_else_stat(expr,statIf, statElse) ::= <<
+if (<expr>):
+    <stats(statIf)>
+else:
+    <stats(statElse)>
+>>
+
+if_elif_stat(expr, statIf, elif) ::= <<
+if (<expr>):
+    <stats(statIf)>
+el<elif>
+>>
+
+while_loop(expr, statWhile) ::= <<
+while (<expr>):
+    <stats(statWhile)>
+>>
+
+
+for_loop(var, from, to, step, stat, statFor) ::= <<
+<stats(stat)>
+for <var> in range(<from>, <to>, <step>):
+    <stats(statFor)>
+>>
+
+for_each_loop(var, stat, expr, statFor) ::= <<
+<stats(stat)>
+for <var> in <expr>:
+    <stats(statFor)>
+>>
+
+
+Boolean(value) ::= <<
+<value> 
+>>
+
+
+binaryExpression(stat, var, expr1, op, expr2) ::= <<
+<stats(stat)>
+<var> = <expr1> <op> <expr2>
+>>
+
+
+print(stat, string) ::= <<
+<stats(stat)>
+print(<string>)
+>>
+
+
+refresh(view, time, stat) ::= <<
+<if(stat)><stats(stat)><endif>
+<view>.update(<if(time)><time><endif>)
+>>
+
+
+wait_mouse_click(eventName, pointName, view) ::= <<
+<eventName> =  MouseClickEvent(<view>, root)
+
+
+# Wait for the user to click and get the coordinates
+<pointName> = <eventName>.wait_for_click()
+>>
+
+
+point(var, x, y, stat) ::= <<
+<stats(stat)>
+<var> = Point(<x>, <y>)
+>>
+
+
+vectorPolar(var, length, angle, stat) ::= <<
+<stats(stat)>
+<var> = (<length> * math.cos(<angle>), <length> * math.sin(<angle>))
+>>
+
+
+close(view) ::= <<
+<view>.close()
+>>
+
+
+attribute_assign(objectVar, attribute, value, stat) ::= <<
+<stats(stat)>
+<objectVar>.<attribute> = <value>
+>>
+
+attribute_assign_dot(objectVar, attribute, value, stat) ::= <<
+<stats(stat)>
+<objectVar>.<attribute> = <value>
+>>
+
+
+move_to(objectsVar, x, y, stat, view) ::= <<
+<stats(stat)>
+<view>.move_absolute(<objectsVar>, <x>, <y>)
+>>
+
+
+move_by(objectsVar, x, y, stat, view) ::= <<
+<stats(stat)>
+<view>.move_relative(<objectsVar>, <x>, <y>)
+>>
+
+
+interpreter(stat, script, propsVals) ::= <<
+<stats(stat)>
+Interpreter(<script>, <propsVals>)
+>>
+
+load(var, fileName) ::= <<
+with open(<fileName>, 'r') as file:
+    <var> = file.read()
+>>
+
+
+
+
+modelChildren(modelChild) ::= <<
+<if(modelChild)><modelChild; separator=", "><endif>
+>>
+modelChild(obj_id) ::= <<
+self.<obj_id>
+>>
+
+innerModel(objID, objType) ::= <<
+<if(obj_id)> self.<objId> = <objType><endif>
+>>
+
+modelInstantiation(modelID, innerModel, modelChildren) ::= <<
+class <modelID>(Object):
+    def __init__(self):
+        self.contents = [<modelChildren>]
+        stats(innerModel)
+    
+    def draw(self):
+        for obj in self.contents:
+            obj.draw()
+    
+    def move_by(self, dx, dy):
+        for obj in self.contents:
+            obj.move_by(dx, dy)
+
+    def move_to(self, x, y):
+        for obj in self.contents:
+            obj.move_to(x, y)
+>>

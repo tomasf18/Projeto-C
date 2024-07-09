@@ -1,0 +1,34 @@
+view : View with {
+    width = 401;
+    height = 401;
+    title = "Illustrating the rectangle shape";
+    background = "black";
+}
+
+integer : Integer = 3;
+print integer;
+
+number : Number = 4.12;
+print number;
+
+sum : Number;
+sum = integer+number;
+print sum;
+
+point1 : Point = (5, 1);
+print point1;
+
+vector : Vector = (2, 4);
+print vector;
+
+point2 : Point;
+point2 = point1 + vector;
+print point2;
+
+string1 : String = "Olá ";
+string2 : String = "Mundo!";
+print string1 + string2;
+
+
+# Close the view
+close view;

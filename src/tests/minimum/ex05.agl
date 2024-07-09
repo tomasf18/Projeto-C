@@ -1,0 +1,78 @@
+
+
+# Create an instance of a View
+view : View with {
+    width = 800;
+    height = 600;
+    title = "Basic Shapes Example";
+    background = "lightblue";
+}
+
+# Create graphic objects
+dot : Dot at (100, 100) with {
+    fill = "black";
+}
+
+line : Line at (150, 150) with {
+    length = (100, 50);
+    fill = "red";
+}
+
+rectangle : Rectangle at (300, 300) with {
+    length = (80, 40);
+    fill = "green";
+}
+
+ellipse : Ellipse at (500, 150) with {
+    length = (120, 60);
+    fill = "blue";
+}
+
+text : Text at (400, 400) with {
+    text = "Hello, AGL!";
+    fill = "black";
+}
+
+arc : Arc at (200, 400) with {
+    length = (100, 50);
+    start = 30;
+    extent = 100;
+    outline = "purple";
+}
+
+arc_chord : ArcChord at (600, 300) with {
+    length = (100, 50);
+    start = 30;
+    extent = 100;
+    fill = "orange";
+}
+
+pie_slice : PieSlice at (700, 100) with {
+    length = (80, 80);
+    start = 45;
+    extent = 270;
+    fill = "yellow";
+}
+
+# Refresh the view to display the objects
+refresh view;
+
+# Move objects in a loop
+for i in 1..10 do {
+    move dot by (10, 0);
+    move line by (10, 0);
+    move rectangle by (10, 0);
+    move ellipse by (10, 0);
+    move text by (10, 0);
+    move arc by (10, 0);
+    move arc_chord by (10, 0);
+    move pie_slice by (10, 0);
+    refresh view after 100 ms;
+}
+
+# Wait for a mouse click before closing the view
+print "Press any mouse button to quit";
+pos : Point = wait mouse click;
+
+# Close the view
+close view;

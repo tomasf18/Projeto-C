@@ -1,0 +1,63 @@
+m.ay = 9.8;
+m.ax = 0;
+m.dt = 0.01;
+
+m.t0 = 0;
+m.t = m.t0;
+m.tf = 100;
+
+m.vx = 30;
+m.vy = 0;
+
+m.x = 0;
+m.y = 0;
+
+ 
+m.floor = 400-(30*2);
+m.top = 0;
+m.left = 200;
+m.right = 800-(30*2);
+
+m.r = 30; # hardcoded
+
+refresh v after 2 s;
+
+t.text = "Current position";
+while (m.t < m.tf) do {
+    tn.text = m.x;
+    
+    m.temp = m.ay * m.dt;
+    m.vy = m.vy + m.temp;
+    m.temp = m.vy * m.dt;
+    m.y = m.y + m.temp;
+
+
+    m.temp = m.ax * m.dt;
+    m.vx = m.vx + m.temp;
+    m.temp = m.vx * m.dt;
+    m.x = m.x + m.temp;
+
+
+    if ( m.floor < m.y ) do {
+        m.vy = - 0.98 * m.vy;
+        m.y = m.floor;
+    } else if (m.top > m.y) do {
+        m.vy = - 0.98 * m.vy;
+        m.y = m.top;
+    }
+
+    if ( m.left > m.x ) do {
+        m.vx = - 0.98 * m.vx;
+        m.x = m.left;
+    }
+
+    if ( m.right < m.x ) do {
+        m.vx = - 0.98 * m.vx;
+        m.x = m.right;
+    }
+    move m to ( m.x, m.y );
+
+    m.t = m.t + m.dt;
+
+    refresh v;
+}

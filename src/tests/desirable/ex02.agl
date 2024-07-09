@@ -1,0 +1,14 @@
+view : View with {
+    width = 401;
+    height = 401;
+    title = "Illustrating the rectangle shape";
+    background = "black";
+}
+
+array : Array = [(1, 2), 3, "Ai a minha vida", [4, 3, 2]];
+
+for element in array do
+    print element;
+
+# Close the view when the loop exits
+close view;
